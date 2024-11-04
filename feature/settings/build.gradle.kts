@@ -13,26 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 plugins {
-    id("nowinandroid.android.feature")
-    id("nowinandroid.android.library.compose")
-    id("nowinandroid.android.library.jacoco")
+    alias(libs.plugins.nowinandroid.android.feature)
+    alias(libs.plugins.nowinandroid.android.library.compose)
+    alias(libs.plugins.nowinandroid.android.library.jacoco)
 }
 
 android {
     namespace = "com.google.samples.apps.nowinandroid.feature.settings"
+}
 
-    testOptions {
-        // TODO: Convert it as a convention plugin once Flamingo goes out (https://github.com/android/nowinandroid/issues/523)
-        managedDevices {
-            devices {
-                maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel4api30").apply {
-                    device = "Pixel 4"
-                    apiLevel = 30
-                    // ATDs currently support only API level 30.
-                    systemImageSource = "aosp-atd"
-                }
-            }
-        }
-    }
+dependencies {
+    implementation(libs.androidx.appcompat)
+    implementation(libs.google.oss.licenses)
+    implementation(projects.core.data)
+
+    testImplementation(projects.core.testing)
+
+    androidTestImplementation(libs.bundles.androidx.compose.ui.test)
 }
